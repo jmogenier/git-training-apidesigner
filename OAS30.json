@@ -4,7 +4,7 @@
     "title" : "Customers API",
     "description" : "An API for keeping track of your customers",
     "contact" : { },
-    "version" : "1.0.0"
+    "version" : "2.0.0"
   },
   "paths" : {
     "/customers" : {
@@ -26,7 +26,7 @@
         }
       },
       "post" : {
-        "summary" : "Create a customer",
+        "summary" : "Cree_un_client",
         "description" : "adds a new customer",
         "requestBody" : {
           "content" : {
