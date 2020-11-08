@@ -26,7 +26,7 @@
         }
       },
       "post" : {
-        "summary" : "Cree_un_client",
+        "summary" : "Create a customer",
         "description" : "adds a new customer",
         "requestBody" : {
           "content" : {
