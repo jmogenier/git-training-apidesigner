@@ -2,7 +2,7 @@
   "openapi" : "3.0.1",
   "info" : {
     "title" : "Customers API",
-    "description" : "An API for keeping track of your customers",
+    "description" : "An API for keeping track of your customers.\nModified by JNM on 12.11.2020",
     "contact" : { },
     "version" : "1.0.0"
   },
