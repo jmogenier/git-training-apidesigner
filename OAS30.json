@@ -1,0 +1,159 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Cars API",
+    "description" : "An API for keeping track of your cars",
+    "contact" : { },
+    "version" : "2.0.8"
+  },
+  "paths" : {
+    "/cars" : {
+      "get" : {
+        "summary" : "Get the list of cars",
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Cars"
+                },
+                "example" : "{\n\"Cars\": \n\t[\n\t\t{\n\t\t\"CARID\":\"0001\",\n\t\t\"CARBRAND\":\"PEUGEOT\",\n\t\t\"CARMODEL\":\"208\",\n\t\t\"CARTYPE\":\"URBANSOUL\"\n\t\t},\n\t\t{\n\t\t\"CARID\":\"0002\",\n\t\t\"CARBRAND\":\"PEUGEOT\",\n\t\t\"CARMODEL\":\"2008\",\n\t\t\"CARTYPE\":\"CROSSWAY\"\n\t\t}, \n\t\t{\n\t\t\"CARID\":\"0003\",\n\t\t\"CARBRAND\":\"PEUGEOT\",\n\t\t\"CARMODEL\":\"208\",\n\t\t\"CARTYPE\":\"STYLE A JN\"\n\t\t},\n\t\t{\n\t\t\"CARID\":\"0004\",\n\t\t\"CARBRAND\":\"AUDI\",\n\t\t\"CARMODEL\":\"A1\",\n\t\t\"CARTYPE\":\"ALL ROAD\"\n\t\t}\n\t]\n}\n"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a car",
+        "description" : "Adds a new car",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Car"
+              },
+              "example" : "{\n\t\"CARID\":\"0001\",\n\t\"CARBRAND\":\"PEUGEOT\",\n\t\"CARMODEL\":\"208\",\n\t\"CARTYPE\":\"URBANSOUL\"\n}"
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "status 201",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Car"
+                },
+                "example" : "{\n\t\"CARID\":\"0001\",\n\t\"CARBRAND\":\"PEUGEOT\",\n\t\"CARMODEL\":\"208\",\n\t\"CARTYPE\":\"URBANSOUL\"\n}"
+              }
+            }
+          },
+          "409" : {
+            "description" : "Status 409. Record could not be added.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorCar"
+                },
+                "example" : "{\n\t\"ID\": \"0001\",\n\t\"errorCode\": \"23000\",\n\t\"errorMessage\": \"Duplicate entry '0001' for key 'PRIMARY' - Line: 0\"\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}" : {
+      "put" : {
+        "summary" : "Update a car",
+        "description" : "Updates a customer",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Car"
+              },
+              "example" : "{\n\t\"CARID\":\"0001\",\n\t\"CARBRAND\":\"PEUGEOT\",\n\t\"CARMODEL\":\"208\",\n\t\"CARTYPE\":\"URBANSOUL\"\n}"
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Car"
+                },
+                "example" : "{\n\t\"CARID\":\"0001\",\n\t\"CARBRAND\":\"PEUGEOT\",\n\t\"CARMODEL\":\"208\",\n\t\"CARTYPE\":\"URBANSOUL\"\n}"
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a car",
+        "description" : "Deletes a customer",
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Car" : {
+        "type" : "object",
+        "required" : [ "CARBRAND", "CARID", "CARMODEL" ],
+        "properties" : {
+          "CARID" : {
+            "type" : "string"
+          },
+          "CARBRAND" : {
+            "type" : "string"
+          },
+          "CARMODEL" : {
+            "type" : "string"
+          },
+          "CARTYPE" : {
+            "type" : "string"
+          }
+        },
+        "example" : "{\n    \"CARID\":\"0001\",\n    \"CARBRAND\":\"PEUGEOT\",\n    \"CARMODEL\":\"208\",\n    \"CARTYPE\":\"URBANSOUL\"\n}"
+      },
+      "Cars" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Car"
+        }
+      },
+      "ErrorCar" : {
+        "type" : "object",
+        "required" : [ "ID" ],
+        "properties" : {
+          "ID" : {
+            "type" : "string"
+          },
+          "errorCode" : {
+            "type" : "integer",
+            "minimum" : 400,
+            "maximum" : 509
+          },
+          "errorMessage" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
