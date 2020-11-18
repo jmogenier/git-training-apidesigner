@@ -1,0 +1,253 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "description": "An API for keeping track of your cars",
+        "id": "62fba596-bf51-4d8e-bd89-270339ac4f7b",
+        "name": "Cars API"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "id": "f75db217-42f1-4052-ae51-6c7983e96356",
+            "name": "Operations cars"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "",
+                  "name": "POST"
+                },
+                "body": {
+                  "bodyType": "Text",
+                  "textBody": "{\n\t\"CARID\":\"9000\",\n\t\"CARBRAND\":\"RENAULT\",\n\t\"CARMODEL\":\"5\",\n\t\"CARTYPE\":\"BEIGE\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "127.0.0.1:5060",
+                  "path": "/services/API/cars"
+                },
+                "description": "Adds a new car",
+                "id": "7ffcc565-11db-494d-bbe6-7795df9e7446",
+                "name": "Create a car",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                  "name": "DELETE"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "127.0.0.1:5060",
+                  "path": "/services/API/cars/9000"
+                },
+                "description": "Deletes a customer",
+                "id": "29fcc354-3df3-40a2-b776-e7e2ee1f777d",
+                "name": "Delete a car",
+                "headers": [],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "Map '/API/Maps/Jobs/REST_services_vars_only/tHMap_1' not found - project:P/API"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "127.0.0.1:5060",
+                  "path": "/services/API/cars"
+                },
+                "id": "47bc6a51-a08b-4151-bedf-6f9f7696c11e",
+                "name": "Get the list of cars",
+                "headers": [],
+                "assertions": []
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Scenario",
+            "id": "4164cab9-2725-4057-bd9d-a86740ea80b5",
+            "name": "Enchainement_cars"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "",
+                  "name": "GET"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8090",
+                  "path": "/services/cars"
+                },
+                "description": "Recevoir la liste complète des voitures",
+                "id": "0fd98ff7-ed03-47d1-b666-5d0e962adab2",
+                "name": "Get the list of cars",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "",
+                  "name": "DELETE"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8090",
+                  "path": "/services/cars/${getEntityById(\"0fd98ff7-ed03-47d1-b666-5d0e962adab2\").\"response\".\"body\".\"Car\".\"0\".\"CARID\"}"
+                },
+                "description": "Deletes a customer",
+                "id": "3f5c5ab3-7b71-41ae-846e-62fc16f0af2a",
+                "name": "Delete a car",
+                "headers": [],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "${getEntityById(\"47bc6a51-a08b-4151-bedf-6f9f7696c11e\").\"response\".\"body\".\"Cars\".\"0\"}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "127.0.0.1:8090",
+                  "path": "/services/cars"
+                },
+                "description": "Adds a new car",
+                "id": "63c87804-4d25-423f-a4b6-461e4de7f15c",
+                "name": "Create a car",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
